@@ -1,0 +1,32 @@
+﻿@using appWebEntityFramework.Models
+@model List<MarcaCLS>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table table-bordered table-hover">
+
+    <thead>
+        <tr>
+            <td>Id marca</td>
+            <td>Nombre Marca</td>
+            <td>Descripcion</td>
+        </tr>
+
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="10%">@item.iidmarca</td>
+                <td width="20%">@item.nombre</td>
+                <td width="70%">@item.descripcion</td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
