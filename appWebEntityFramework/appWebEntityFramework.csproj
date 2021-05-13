@@ -116,7 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
+    <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -144,6 +146,7 @@
     <Compile Include="Models\Cliente.cs">
       <DependentUpon>BDPasajes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClienteCLS.cs" />
     <Compile Include="Models\DETALLEVENTA.cs">
       <DependentUpon>BDPasajes.tt</DependentUpon>
     </Compile>
@@ -175,6 +178,7 @@
     <Compile Include="Models\Sucursal.cs">
       <DependentUpon>BDPasajes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SucursalCLS.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>BDPasajes.tt</DependentUpon>
     </Compile>
@@ -214,6 +218,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Marca\Index.cshtml" />
+    <Content Include="Views\Sucursal\Index.cshtml" />
+    <Content Include="Views\Cliente\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

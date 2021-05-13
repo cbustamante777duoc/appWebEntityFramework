@@ -1,0 +1,33 @@
+﻿@using appWebEntityFramework.Models
+@model List<SucursalCLS> 
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table table-bordered table-hover">
+
+    <thead>
+        <tr>
+            <td>@Html.LabelFor(p => Model[0].iidsucursal)</td>
+            <td>@Html.LabelFor(p => Model[0].nombre)</td>
+            <td>@Html.LabelFor(p => Model[0].telefono)</td>
+            <td>@Html.LabelFor(p => Model[0].email)</td>
+        </tr>
+
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="10%">@item.iidsucursal</td>
+                <td width="30%">@item.nombre</td>
+                <td width="30%">@item.telefono</td>
+                <td width="30%">@item.email</td>
+            </tr>
+        }
+    </tbody>
+
+</table>

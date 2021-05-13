@@ -15,13 +15,14 @@ namespace appWebEntityFramework.Controllers
             List<MarcaCLS> listaMarca = null;
             using (var bd = new BDPasajeEntities())
             {
-                 listaMarca = (from marca in bd.Marca
-                                             select new MarcaCLS
-                                             {
-                                                 iidmarca = marca.IIDMARCA,
-                                                 nombre = marca.NOMBRE,
-                                                 descripcion = marca.DESCRIPCION
-                                             }).ToList();
+                listaMarca = (from marca in bd.Marca
+                              where marca.BHABILITADO == 1
+                              select new MarcaCLS
+                              {
+                                  iidmarca = marca.IIDMARCA,
+                                  nombre = marca.NOMBRE,
+                                  descripcion = marca.DESCRIPCION
+                              }).ToList();
             }
 
             return View(listaMarca);
