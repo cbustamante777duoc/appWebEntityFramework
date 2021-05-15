@@ -27,5 +27,36 @@ namespace appWebEntityFramework.Controllers
 
             return View(listaMarca);
         }
+
+        public ActionResult Agregar() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Agregar( MarcaCLS oMarcaCLS)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(oMarcaCLS);
+
+            }
+            else
+            {
+                using (var bd = new BDPasajeEntities())
+                {
+                    Marca marca = new Marca();
+                    marca.IIDMARCA = oMarcaCLS.iidmarca;
+                    marca.NOMBRE = oMarcaCLS.nombre;
+                    marca.DESCRIPCION = oMarcaCLS.descripcion;
+                    marca.BHABILITADO = 1;
+                    bd.Marca.Add(marca);
+                    bd.SaveChanges();
+
+                }
+
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
