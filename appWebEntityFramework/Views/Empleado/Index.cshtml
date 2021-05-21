@@ -6,14 +6,15 @@
 
 <h2>Index</h2>
 
-<table class="table table-hover table-bordered" >
+@Html.ActionLink("Agregar", "Agregar", "Empleado", null, new { @class = "btn btn-primary" })
+<table class="table table-hover table-bordered">
 
     <thead>
         <tr>
-            <td>@Html.LabelFor(p=>Model[0].iidEmpleado)</td>
-            <td>@Html.LabelFor(p=>Model[0].nombre)</td>
+            <td>@Html.LabelFor(p => Model[0].iidEmpleado)</td>
+            <td>@Html.LabelFor(p => Model[0].nombre)</td>
             <td>@Html.LabelFor(p => Model[0].apPaterno)</td>
-            <td>@Html.LabelFor(p=>Model[0].nombreTipoUsuario)</td>
+            <td>@Html.LabelFor(p => Model[0].nombreTipoUsuario)</td>
             <td>@Html.LabelFor(p => Model[0].nombreTipoContrato)</td>
         </tr>
     </thead>

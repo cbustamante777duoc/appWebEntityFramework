@@ -34,6 +34,11 @@ namespace appWebEntityFramework.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime fechaContrato { get; set; }
 
+        [Display(Name = "sueldo")]
+        [Required]
+        [Range(0,10000000,ErrorMessage ="Fuera de rango")]
+        public decimal sueldo { get; set; }
+
         [Display(Name = "Tipo usuario")]
         [Required]
         public int iidtipoUsuario { get; set; }
