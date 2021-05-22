@@ -28,13 +28,13 @@ namespace appWebEntityFramework.Controllers
             return View(listaMarca);
         }
 
-        public ActionResult Agregar() 
+        public ActionResult Agregar()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Agregar( MarcaCLS oMarcaCLS)
+        public ActionResult Agregar(MarcaCLS oMarcaCLS)
         {
             if (!ModelState.IsValid)
             {
@@ -57,6 +57,22 @@ namespace appWebEntityFramework.Controllers
 
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Editar(int id) 
+        {
+            MarcaCLS oMarcaCLS = new MarcaCLS();
+
+            using (var bd = new BDPasajeEntities())
+            {
+                Marca oMarca = bd.Marca.Where(p => p.IIDMARCA.Equals(id)).First();
+                oMarcaCLS.iidmarca = oMarca.IIDMARCA;
+                oMarcaCLS.nombre = oMarca.NOMBRE;
+                oMarcaCLS.descripcion = oMarca.DESCRIPCION;
+
+            }
+
+            return View(oMarcaCLS);
         }
     }
 }

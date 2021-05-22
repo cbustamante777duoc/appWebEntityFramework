@@ -11,9 +11,10 @@
 
     <thead>
         <tr>
-            <td>@Html.LabelFor(p=>Model[0].iidmarca)</td>
-            <td>@Html.LabelFor(p => Model[0].nombre)</td>
-            <td>@Html.LabelFor(p=>Model[0].descripcion)</td>
+            <td width="10%">@Html.LabelFor(p=>Model[0].iidmarca)</td>
+            <td width="20%">@Html.LabelFor(p => Model[0].nombre)</td>
+            <td width="60%">@Html.LabelFor(p=>Model[0].descripcion)</td>
+            <td width="10%">Operaciones</td>
         </tr>
 
     </thead>
@@ -24,7 +25,15 @@
             <tr>
                 <td width="10%">@item.iidmarca</td>
                 <td width="20%">@item.nombre</td>
-                <td width="70%">@item.descripcion</td>
+                <td width="60%">@item.descripcion</td>
+
+                <td>
+                    @Html.ActionLink(" ", "Editar", "Marca", new { id = item.iidmarca }, new { @class = "bi bi-pen btn btn-primary" })
+
+                    @Html.ActionLink(" ", "Eliminar", "Marca", new { id = item.iidmarca }, new { @class = "bi bi-trash btn btn-danger" })
+
+
+                </td>
 
             </tr>
         }
