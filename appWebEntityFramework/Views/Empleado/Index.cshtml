@@ -16,6 +16,7 @@
             <td>@Html.LabelFor(p => Model[0].apPaterno)</td>
             <td>@Html.LabelFor(p => Model[0].nombreTipoUsuario)</td>
             <td>@Html.LabelFor(p => Model[0].nombreTipoContrato)</td>
+            <td>Operaciones</td>
         </tr>
     </thead>
 
@@ -29,6 +30,12 @@
                 <td>@item.apPaterno</td>
                 <td>@item.nombreTipoUsuario</td>
                 <td>@item.nombreTipoContrato</td>
+                <td>
+
+                    @Html.ActionLink(" ", "Editar", "Empleado", new { id = item.iidEmpleado }, new { @class = "bi bi-pen btn btn-primary" })
+
+                    @Html.ActionLink(" ", "Eliminar", "Empleado", new { id = item.iidEmpleado }, new { @class = "bi bi-trash btn btn-danger" })
+                </td>
             </tr>
         }
 

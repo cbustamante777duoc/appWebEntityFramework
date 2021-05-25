@@ -145,5 +145,31 @@ namespace appWebEntityFramework.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Editar(int id)
+        {
+            listarCombos();
+
+            EmpleadoCLS oEmpleadoCLS = new EmpleadoCLS();
+
+            using (var bd = new BDPasajeEntities())
+            {
+                Empleado oEmpleado = bd.Empleado.Where(p => p.IIDEMPLEADO.Equals(id)).First();
+
+                oEmpleadoCLS.nombre = oEmpleado.NOMBRE;
+                oEmpleadoCLS.apPaterno= oEmpleado.APPATERNO;
+                oEmpleadoCLS.apMaterno= oEmpleado.APMATERNO;
+                oEmpleadoCLS.fechaContrato = (DateTime) oEmpleado.FECHACONTRATO;
+                oEmpleadoCLS.sueldo = (decimal) oEmpleado.SUELDO;
+                oEmpleadoCLS.iidEmpleado = oEmpleado.IIDEMPLEADO;
+                oEmpleadoCLS.iidtipoUsuario =(int) oEmpleado.IIDTIPOUSUARIO;
+                oEmpleadoCLS.iidtipoContrato =(int) oEmpleado.IIDTIPOCONTRATO;
+                oEmpleadoCLS.iidSexo =(int) oEmpleado.IIDSEXO;
+            }
+
+            return View(oEmpleadoCLS);
+        }
+
+
     }
 }
