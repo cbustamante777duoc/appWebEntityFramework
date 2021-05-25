@@ -34,6 +34,7 @@ namespace appWebEntityFramework.Models
 
         [Display(Name = "Direccion")]
         [StringLength(200, ErrorMessage = "longuitud maxima de caracteres es de 200")]
+        [DataType(DataType.MultilineText)]
         [Required]
         public string direccion { get; set; }
 
