@@ -37,5 +37,106 @@ namespace appWebEntityFramework.Controllers
 
             return View(listaBus);
         }
+
+        public void llenarComboTipoBus()
+        {
+            List<SelectListItem> lista;
+
+            using (var bd = new BDPasajeEntities())
+            {
+                lista = (from item in bd.TipoBus
+                         where item.BHABILITADO == 1
+                         select new SelectListItem
+                         {
+                             Text = item.NOMBRE,
+                             Value = item.IIDTIPOBUS.ToString()
+
+                         }).ToList();
+
+                lista.Insert(0, new SelectListItem { Text = "---selecione--", Value = "" });
+                ViewBag.listaTipoBus = lista;
+            }
+
+        }
+
+        public void llenarComboMarca()
+        {
+            List<SelectListItem> lista;
+
+            using (var bd = new BDPasajeEntities())
+            {
+                lista = (from item in bd.Marca
+                         where item.BHABILITADO == 1
+                         select new SelectListItem
+                         {
+                             Text = item.NOMBRE,
+                             Value = item.IIDMARCA.ToString()
+
+                         }).ToList();
+
+                lista.Insert(0, new SelectListItem { Text = "---selecione--", Value = "" });
+                ViewBag.listaMarca = lista;
+            }
+
+        }
+
+        public void llenarComboModelo()
+        {
+            List<SelectListItem> lista;
+
+            using (var bd = new BDPasajeEntities())
+            {
+                lista = (from item in bd.Modelo
+                         where item.BHABILITADO == 1
+                         select new SelectListItem
+                         {
+                             Text = item.NOMBRE,
+                             Value = item.IIDMODELO.ToString()
+
+                         }).ToList();
+
+                lista.Insert(0, new SelectListItem { Text = "---selecione--", Value = "" });
+                ViewBag.listaModelo = lista;
+            }
+
+        }
+
+        public void llenarComboSucursal()
+        {
+            List<SelectListItem> lista;
+
+            using (var bd = new BDPasajeEntities())
+            {
+                lista = (from item in bd.Sucursal
+                         where item.BHABILITADO == 1
+                         select new SelectListItem
+                         {
+                             Text = item.NOMBRE,
+                             Value = item.IIDSUCURSAL.ToString()
+
+                         }).ToList();
+
+                lista.Insert(0, new SelectListItem { Text = "---selecione--", Value = "" });
+                ViewBag.listaSurcursal = lista;
+            }
+
+        }
+
+        public void ListarComboxes()
+        {
+            llenarComboSucursal();
+            llenarComboMarca();
+            llenarComboModelo();
+            llenarComboTipoBus();
+        }
+
+
+        public ActionResult Agregar() 
+        {
+            ListarComboxes();
+            return View();
+        }
+     
+
     }
 }
