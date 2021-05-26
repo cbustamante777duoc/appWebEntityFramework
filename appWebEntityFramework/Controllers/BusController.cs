@@ -136,6 +136,39 @@ namespace appWebEntityFramework.Controllers
             ListarComboxes();
             return View();
         }
+
+
+        [HttpPost]
+        public ActionResult Agregar(BusCLS oBusCLS) 
+        {
+            if (!ModelState.IsValid)
+            {
+                ListarComboxes();
+                return View(oBusCLS);
+            }
+
+            using (var bd = new BDPasajeEntities())
+            {
+                Bus bus = new Bus();
+                bus.IIDSUCURSAL = oBusCLS.iidSucursal;
+                bus.IIDTIPOBUS = oBusCLS.iidTipoBus;
+                bus.PLACA = oBusCLS.placa;
+                bus.FECHACOMPRA= oBusCLS.fechaCompra;
+                bus.IIDMODELO= oBusCLS.iidModelo;
+                bus.NUMEROFILAS= oBusCLS.numeroFilas;
+                bus.NUMEROCOLUMNAS= oBusCLS.numeroColumnas;
+                bus.DESCRIPCION= oBusCLS.descripcion;
+                bus.OBSERVACION= oBusCLS.observacion;
+                bus.IIDMARCA= oBusCLS.iidmarca;
+                bus.BHABILITADO = 1;
+
+                bd.Bus.Add(bus);
+                bd.SaveChanges();
+
+            }
+
+            return RedirectToAction("Index");
+        }
      
 
     }
