@@ -169,6 +169,31 @@ namespace appWebEntityFramework.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Editar(int id) 
+        {
+            BusCLS oBusCLS = new BusCLS();
+            ListarComboxes();
+
+            using (var bd = new BDPasajeEntities())
+            {
+                Bus oBus = bd.Bus.Where(p => p.IIDBUS.Equals(id)).First();
+                oBusCLS.iidBus = oBus.IIDBUS;
+                oBusCLS.iidSucursal =(int) oBus.IIDSUCURSAL;
+                oBusCLS.iidTipoBus =(int) oBus.IIDTIPOBUS;
+                oBusCLS.placa = oBus.PLACA;
+                oBusCLS.fechaCompra = (DateTime) oBus.FECHACOMPRA;
+                oBusCLS.iidModelo =(int) oBus.IIDMODELO;
+                oBusCLS.numeroColumnas =(int) oBus.NUMEROCOLUMNAS;
+                oBusCLS.numeroFilas = (int) oBus.NUMEROFILAS;
+                oBusCLS.descripcion =  oBus.DESCRIPCION;
+                oBusCLS.observacion =  oBus.OBSERVACION;
+                oBusCLS.iidmarca = (int)  oBus.IIDMARCA;
+            }
+
+            return View(oBusCLS);
+        
+        }
      
 
     }

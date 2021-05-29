@@ -18,6 +18,7 @@
             <td>@Html.LabelFor(p => Model[0].nombreModelo)</td>
             <td>@Html.LabelFor(p => Model[0].nombreSucursal)</td>
             <td>@Html.LabelFor(p => Model[0].nombreTipoBus)</td>
+            <td>Operaciones</td>
         </tr>
 
     </thead>
@@ -33,6 +34,12 @@
                 <td>@item.nombreModelo</td>
                 <td>@item.nombreSucursal</td>
                 <td>@item.nombreTipoBus</td>
+                <td>
+                    @Html.ActionLink(" ", "Editar", "Bus", new { id = item.iidBus }, new { @class = "bi bi-pen btn btn-primary" })
+
+                    @Html.ActionLink(" ", "Eliminar", "Bus", new { id = item.iidBus }, new { @class = "bi bi-trash btn btn-danger" })
+
+                </td>
             </tr>
 
         }
