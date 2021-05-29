@@ -74,5 +74,31 @@ namespace appWebEntityFramework.Controllers
 
             return View(oMarcaCLS);
         }
+
+        [HttpPost]
+        public ActionResult Editar(MarcaCLS oMarcaCLS) 
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(oMarcaCLS);
+
+            }
+
+
+            int idMarca = oMarcaCLS.iidmarca;
+
+            using (var bd = new BDPasajeEntities())
+            {
+
+                Marca marca = bd.Marca.Where(p => p.IIDMARCA.Equals(idMarca)).First();
+
+                marca.NOMBRE = oMarcaCLS.nombre;
+                marca.DESCRIPCION = oMarcaCLS.descripcion;
+                bd.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
