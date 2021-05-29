@@ -10,7 +10,7 @@
     <div class="col-md-6">
 
 
-        @using (Html.BeginForm("Agregar", "Marca", FormMethod.Post))
+        @using (Html.BeginForm("Agregar", "Marca", FormMethod.Post, new {@id="frmAgregar" }))
         {
 
             <div>
@@ -35,3 +35,17 @@
         }
     </div>
 </div>
+
+<script>
+
+    var frmAgregar = document.getElementById("frmAgregar");
+        frmAgregar.onsubmit = function (e) {
+
+            e.preventDefault();
+
+        if (confirm("¿Deseas guardar los cambios?")==1) {
+            frmAgregar.submit();
+        }
+    }
+
+</script>
