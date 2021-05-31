@@ -22,7 +22,7 @@ namespace appWebEntityFramework.Controllers
                                 {
                                     iidcliente = cliente.IIDCLIENTE,
                                     nombre = cliente.NOMBRE,
-                                    apPaterno = cliente.APMATERNO,
+                                    apPaterno = cliente.APPATERNO,
                                     apMaterno = cliente.APMATERNO,
                                     telefonoFijo = cliente.TELEFONOFIJO
 
@@ -120,6 +120,35 @@ namespace appWebEntityFramework.Controllers
 
 
             return View(oClienteCLS);
+        }
+
+        [HttpPost]
+        public ActionResult Editar(ClienteCLS oClienteCLS) 
+        {
+            int idCliente = oClienteCLS.iidcliente;
+
+            if (!ModelState.IsValid)
+            {
+                return View(oClienteCLS);
+
+            }
+
+            using (var bd = new BDPasajeEntities())
+            {
+                Cliente cliente = bd.Cliente.Where(p => p.IIDCLIENTE.Equals(idCliente)).First();
+                cliente.NOMBRE = oClienteCLS.nombre;
+                cliente.APPATERNO = oClienteCLS.apPaterno;
+                cliente.APMATERNO = oClienteCLS.apMaterno;
+                cliente.EMAIL = oClienteCLS.email;
+                cliente.DIRECCION = oClienteCLS.direccion;
+                cliente.IIDSEXO = oClienteCLS.iidsexo;
+                cliente.TELEFONOCELULAR = oClienteCLS.telefonoCelular;
+                cliente.TELEFONOFIJO= oClienteCLS.telefonoFijo;
+                bd.SaveChanges();
+    
+            }
+
+            return RedirectToAction("Index");
         }
     }
 
