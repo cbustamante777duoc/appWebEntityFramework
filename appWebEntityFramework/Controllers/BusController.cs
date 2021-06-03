@@ -194,6 +194,40 @@ namespace appWebEntityFramework.Controllers
             return View(oBusCLS);
         
         }
+
+
+        [HttpPost]
+        public ActionResult Editar(BusCLS oBusCLS) 
+        {
+            int idBus = oBusCLS.iidBus;
+
+            if (!ModelState.IsValid)
+            {
+                return View(oBusCLS);
+            }
+
+            using (var bd = new BDPasajeEntities())
+            {
+                Bus bus = bd.Bus.Where(p => p.IIDBUS.Equals(idBus)).First();
+
+                bus.IIDSUCURSAL = oBusCLS.iidSucursal;
+                bus.IIDTIPOBUS = oBusCLS.iidTipoBus;
+                bus.PLACA = oBusCLS.placa;
+                bus.FECHACOMPRA = oBusCLS.fechaCompra;
+                bus.IIDMODELO = oBusCLS.iidModelo;
+                bus.NUMEROCOLUMNAS = oBusCLS.numeroColumnas;
+                bus.NUMEROFILAS = oBusCLS.numeroFilas;
+                bus.DESCRIPCION = oBusCLS.descripcion;
+                bus.OBSERVACION = oBusCLS.observacion;
+                bus.IIDMARCA = oBusCLS.iidmarca;
+
+                bd.SaveChanges();
+
+            }
+
+            return RedirectToAction("Index");
+        
+        }
      
 
     }

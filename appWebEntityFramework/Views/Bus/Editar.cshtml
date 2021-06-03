@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        @using (Html.BeginForm("Editar", "Bus", FormMethod.Post))
+        @using (Html.BeginForm("Editar", "Bus", FormMethod.Post, new {@id="frmEditar" }))
         {
             @Html.AntiForgeryToken()
 
@@ -116,10 +116,45 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Agregar" class="btn btn-primary" />
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Guardar
+                    </button>
+                    @Html.ActionLink("Regresar", "Index", "Bus", null, new { @class = "btn btn-danger" })
                 </div>
             </div>
         </div>
         }
     </div>
 </div>
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar los cambios?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div style="padding:1em">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="Agregar()" class="btn btn-info">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function Agregar() {
+
+        var frmEditar = document.getElementById("frmEditar");
+        frmEditar.submit();
+
+    }
+
+</script>
+
