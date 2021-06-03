@@ -21,6 +21,7 @@ namespace appWebEntityFramework.Models
 
         [Display(Name = "Precio")]
         [Required]
+        [Range(0,2500000,ErrorMessage ="Rango fuera de indece")]
         public double precio { get; set; }
 
         [Display(Name = "Fecha viaje")]

@@ -38,5 +38,64 @@ namespace appWebEntityFramework.Controllers
             }
             return View(listaViaje);
         }
+
+        public ActionResult Agregar() 
+        {
+            listarCombos();
+            return View();
+        }
+
+
+        /*este metodo se usa para llenar combo lugar de origen y destino */
+        public void llenarComboLugar()
+        {
+            List<SelectListItem> lista;
+
+            using (var bd = new BDPasajeEntities())
+            {
+                lista = (from item in bd.Lugar
+                         where item.BHABILITADO == 1
+                         select new SelectListItem
+                         {
+                             Text = item.NOMBRE,
+                             Value = item.IIDLUGAR.ToString()
+
+                         }).ToList();
+
+                lista.Insert(0, new SelectListItem { Text = "---selecione--", Value = "" });
+                ViewBag.listaLugar = lista;
+            }
+
+        }
+
+
+        public void llenarComboBus()
+        {
+            List<SelectListItem> lista;
+
+            using (var bd = new BDPasajeEntities())
+            {
+                lista = (from item in bd.Bus
+                         where item.BHABILITADO == 1
+                         select new SelectListItem
+                         {
+                             Text = item.PLACA,
+                             Value = item.IIDBUS.ToString()
+
+                         }).ToList();
+
+                lista.Insert(0, new SelectListItem { Text = "---selecione--", Value = "" });
+                ViewBag.listaBus = lista;
+            }
+
+        }
+
+
+        public void listarCombos() 
+        {
+
+            llenarComboBus();
+            llenarComboLugar();
+        }
     }
 }
