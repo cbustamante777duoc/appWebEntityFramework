@@ -100,5 +100,21 @@ namespace appWebEntityFramework.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Eliminar(int id) 
+        {
+            using (var bd = new BDPasajeEntities())
+            {
+                Marca marca = bd.Marca.Where(p => p.IIDMARCA.Equals(id)).First();
+                //eliminacion logica
+                marca.BHABILITADO = 0;
+
+                bd.SaveChanges();
+
+            }
+
+            return RedirectToAction("Index");
+        
+        }
     }
 }
