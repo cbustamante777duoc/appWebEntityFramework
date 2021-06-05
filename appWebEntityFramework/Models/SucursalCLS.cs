@@ -39,5 +39,7 @@ namespace appWebEntityFramework.Models
         public DateTime fechaApertura { get; set; }
 
         public int bhabilitado { get; set; }
+
+        public string mensajeError { get; set; }
     }
 }

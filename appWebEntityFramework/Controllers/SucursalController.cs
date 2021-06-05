@@ -38,8 +38,20 @@ namespace appWebEntityFramework.Controllers
         [HttpPost]
         public ActionResult Agregar(SucursalCLS oSucursalCLS)
         {
-            if (!ModelState.IsValid)
+            int nRegistrosEncontrados = 0;
+            string nombreSucursal = oSucursalCLS.nombre;
+
+            using (var bd = new BDPasajeEntities())
             {
+                nRegistrosEncontrados = bd.Sucursal.Where(p => p.NOMBRE.Equals(nombreSucursal)).Count();
+
+            }
+
+            if (!ModelState.IsValid || nRegistrosEncontrados >=1)
+            {
+                if (nRegistrosEncontrados >= 1) oSucursalCLS.mensajeError = "La sucursal ya ha sido agregada";
+                
+
                 return View(oSucursalCLS);
 
             }
@@ -84,9 +96,20 @@ namespace appWebEntityFramework.Controllers
         public ActionResult Editar(SucursalCLS oSucursalCLS) 
         {
             int idSucursal = oSucursalCLS.iidsucursal;
+            string nombreSucursal = oSucursalCLS.nombre;
+            int nRegistrosAfectados = 0;
 
-            if (!ModelState.IsValid)
+            using (var bd = new BDPasajeEntities())
             {
+                nRegistrosAfectados = bd.Sucursal.Where(p => p.NOMBRE.Equals(nombreSucursal) && !p.IIDSUCURSAL.Equals(idSucursal)).Count();
+            }
+
+
+            if (!ModelState.IsValid || nRegistrosAfectados>=1)
+            {
+                if (nRegistrosAfectados >= 1) oSucursalCLS.mensajeError = "Ya existe la sucursal";
+                
+
                 return View(oSucursalCLS);
             }
 
@@ -105,6 +128,20 @@ namespace appWebEntityFramework.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Eliminar(int id) 
+        {
+            using (var bd = new BDPasajeEntities())
+            {
+                Sucursal sucursal = bd.Sucursal.Where(p => p.IIDSUCURSAL.Equals(id)).First();
+                sucursal.BHABILITADO = 0;
+                bd.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        
         }
     }
 }

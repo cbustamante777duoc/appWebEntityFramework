@@ -34,7 +34,7 @@
 
                     @Html.ActionLink(" ", "Editar", "Sucursal", new { id = item.iidsucursal}, new { @class = "bi bi-pen btn btn-primary" })
 
-                    @Html.ActionLink(" ", "Eliminar", "Sucursal", new { id = item.iidsucursal }, new { @class = "bi bi-trash btn btn-danger" })
+                    @Html.ActionLink(" ", "Eliminar", "Sucursal", new { id = item.iidsucursal }, new { @class = "bi bi-trash btn btn-danger" ,@onclick="eliminarSucursal()" })
 
                 </td>
             </tr>
@@ -42,3 +42,18 @@
     </tbody>
 
 </table>
+
+<script>
+
+    function eliminarSucursal() {
+
+        if (confirm("¿desea eliminar?") == 1) {
+            alert("Se elimino correctamente");
+        } else {
+            event.preventDefault();
+        }
+
+
+    }
+
+</script>
