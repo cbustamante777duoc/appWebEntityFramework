@@ -23,5 +23,8 @@ namespace appWebEntityFramework.Models
         public string descripcion { get; set; }
 
         public int bhabilitado { get; set; }
+
+        //propiedad adicional
+        public string mensajeError { get; set; }
     }
 }
