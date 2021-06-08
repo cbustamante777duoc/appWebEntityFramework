@@ -65,8 +65,23 @@ namespace appWebEntityFramework.Controllers
         [HttpPost]
         public ActionResult Agregar(ClienteCLS oClienteCLS) 
         {
-            if (!ModelState.IsValid)
+            int nRegistrosEncontrados = 0;
+            string nombre = oClienteCLS.nombre;
+            string apPaterno = oClienteCLS.apPaterno;
+            string apMaterno = oClienteCLS.apMaterno;
+
+            //VALIDACION DE QUE NO SE REPITA EN BD EL NOMBRE COMPLETO
+            using (var bd = new BDPasajeEntities())
             {
+                nRegistrosEncontrados = bd.Cliente.Where(p => p.NOMBRE.Equals(nombre) && 
+                p.APPATERNO.Equals(apPaterno) && p.APMATERNO.Equals(apMaterno)).Count();
+
+            }
+
+            if (!ModelState.IsValid || nRegistrosEncontrados>=1)
+            {
+                if (nRegistrosEncontrados >= 1) oClienteCLS.mensajeError = "ya esta registrado el cliente";
+
                 llenarSexo();
                 ViewBag.lista = listaSexo;
 
@@ -149,6 +164,20 @@ namespace appWebEntityFramework.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Eliminar(int iidcliente) 
+        {
+            using (var bd = new  BDPasajeEntities())
+            {
+                Cliente cliente = bd.Cliente.Where(p => p.IIDCLIENTE.Equals(iidcliente)).First();
+                cliente.BHABILITADO = 0;
+                bd.SaveChanges();
+
+                return RedirectToAction("Index");
+
+            }
+        
         }
     }
 

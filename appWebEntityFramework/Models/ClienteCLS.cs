@@ -54,6 +54,8 @@ namespace appWebEntityFramework.Models
 
         public int bhabilitado { get; set; }
 
+        public string mensajeError { get; set; }
+
 
     }
 }
