@@ -33,31 +33,32 @@ namespace appWebEntityFramework.Controllers
         }
 
 
-        List<SelectListItem> listaSexo;
 
-        private void llenarSexo() 
+        public void llenarComboSexo()
         {
+            List<SelectListItem> lista;
+
             using (var bd = new BDPasajeEntities())
             {
-                listaSexo = (from sexo in bd.Sexo
-                             where sexo.BHABILITADO == 1
-                             select new SelectListItem
-                             {
-                                 Text = sexo.NOMBRE,
-                                 Value = sexo.IIDSEXO.ToString()
+                lista = (from sexo in bd.Sexo
+                         where sexo.BHABILITADO == 1
+                         select new SelectListItem
+                         {
+                             Text = sexo.NOMBRE,
+                             Value = sexo.IIDSEXO.ToString()
 
-                             }).ToList();
+                         }).ToList();
 
-                listaSexo.Insert(0, new SelectListItem { Text = "-----seleccione----", Value = "" });
-
+                lista.Insert(0, new SelectListItem { Text = "---selecione--", Value = "" });
+                ViewBag.listaSexo = lista;
             }
-        
+
         }
 
         public ActionResult Agregar()
         {
-            llenarSexo();
-            ViewBag.lista = listaSexo;
+            llenarComboSexo();
+            
 
             return View();
         }
@@ -82,8 +83,8 @@ namespace appWebEntityFramework.Controllers
             {
                 if (nRegistrosEncontrados >= 1) oClienteCLS.mensajeError = "ya esta registrado el cliente";
 
-                llenarSexo();
-                ViewBag.lista = listaSexo;
+                llenarComboSexo();
+                
 
                 return View(oClienteCLS);
             }
@@ -116,8 +117,8 @@ namespace appWebEntityFramework.Controllers
 
             using (var bd = new BDPasajeEntities())
             {
-                llenarSexo();
-                ViewBag.lista = listaSexo;
+                llenarComboSexo();
+                
 
                 Cliente oCliente = bd.Cliente.Where(p => p.IIDCLIENTE.Equals(id)).First();
 
@@ -140,10 +141,23 @@ namespace appWebEntityFramework.Controllers
         [HttpPost]
         public ActionResult Editar(ClienteCLS oClienteCLS) 
         {
+            int nRegistrosEncontrado = 0;
             int idCliente = oClienteCLS.iidcliente;
+            string nombre = oClienteCLS.nombre;
+            string appPaterno = oClienteCLS.apPaterno;
+            string appMaterno = oClienteCLS.apMaterno;
 
-            if (!ModelState.IsValid)
+            using (var bd = new BDPasajeEntities())
             {
+               nRegistrosEncontrado = bd.Cliente.Where(p => p.NOMBRE.Equals(nombre) && p.APPATERNO.Equals(appPaterno)
+                && p.APMATERNO.Equals(appMaterno) && !p.IIDCLIENTE.Equals(idCliente)).Count();
+
+            }
+
+            if (!ModelState.IsValid || nRegistrosEncontrado>=1)
+            {
+                if (nRegistrosEncontrado >= 1) oClienteCLS.mensajeError = "Ya existe el cliente";
+                llenarComboSexo();
                 return View(oClienteCLS);
 
             }
