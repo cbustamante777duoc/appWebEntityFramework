@@ -7,13 +7,17 @@
 
 <h2>Index</h2>
 
-@Html.ActionLink("Agregar","Agregar","Bus", new {@class = "btn btn-primary" })
+
+
+
+
+@Html.ActionLink("Agregar", "Agregar", "Bus", new { @class = "btn btn-primary" })
 
 <table class="table table-bordered table-hover">
 
     <thead>
         <tr>
-            <td>@Html.LabelFor(p=>Model[0].iidBus)</td>
+            <td>@Html.LabelFor(p => Model[0].iidBus)</td>
             <td>@Html.LabelFor(p => Model[0].placa)</td>
             <td>@Html.LabelFor(p => Model[0].nombreModelo)</td>
             <td>@Html.LabelFor(p => Model[0].nombreSucursal)</td>
@@ -53,6 +57,8 @@
 
 </table>
 
+
+
 <!--MODAL-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -73,7 +79,7 @@
 <!--el id bus tiene que ser el mismo que se pasa por la funcion-->
 @using (Html.BeginForm("Eliminar","Bus", FormMethod.Post, new {@id = "frmEliminar" }))
 {
-    @Html.TextBox("iidBus")
+    @Html.Hidden("iidBus")
 }
 
 <script>

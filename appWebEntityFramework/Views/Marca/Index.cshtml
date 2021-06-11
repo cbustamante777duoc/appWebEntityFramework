@@ -5,47 +5,59 @@
 }
 
 <h2>Marcas</h2>
-@Html.ActionLink("Agregar","Agregar","Marca",null, new {@class="btn btn-primary" })
+@Html.ActionLink("Agregar", "Agregar", "Marca", null, new { @class = "btn btn-primary" })
 
-<table class="table table-bordered table-hover">
 
-    <thead>
-        <tr>
-            <td width="10%">@Html.LabelFor(p=>Model[0].iidmarca)</td>
-            <td width="20%">@Html.LabelFor(p => Model[0].nombre)</td>
-            <td width="60%">@Html.LabelFor(p=>Model[0].descripcion)</td>
-            <td width="10%">Operaciones</td>
-        </tr>
+@using (Html.BeginForm("Index", "Marca", FormMethod.Post))
+{
 
-    </thead>
+    @Html.Label("Ingrese el nombre marca")
+    @Html.TextBox("nombre")
+    <input type="submit" class="btn btn-success" value="Buscar" />
 
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+
+    <table class="table table-bordered table-hover">
+
+        <thead>
             <tr>
-                <td width="10%">@item.iidmarca</td>
-                <td width="20%">@item.nombre</td>
-                <td width="60%">@item.descripcion</td>
-
-                <td>
-                    @Html.ActionLink(" ", "Editar", "Marca", new { id = item.iidmarca }, new { @class = "bi bi-pen btn btn-primary" })
-
-                    @Html.ActionLink(" ", "Eliminar", "Marca", new { id = item.iidmarca }, new { @class = "bi bi-trash btn btn-danger" , @onclick="Eliminar()"})
-
-
-                </td>
-
+                <td width="10%">@Html.LabelFor(p => Model[0].iidmarca)</td>
+                <td width="20%">@Html.LabelFor(p => Model[0].nombre)</td>
+                <td width="60%">@Html.LabelFor(p => Model[0].descripcion)</td>
+                <td width="10%">Operaciones</td>
             </tr>
-        }
-    </tbody>
 
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="10%">@item.iidmarca</td>
+                    <td width="20%">@item.nombre</td>
+                    <td width="60%">@item.descripcion</td>
+
+                    <td>
+                        @Html.ActionLink(" ", "Editar", "Marca", new { id = item.iidmarca }, new { @class = "bi bi-pen btn btn-primary" })
+
+                        @Html.ActionLink(" ", "Eliminar", "Marca", new { id = item.iidmarca }, new { @class = "bi bi-trash btn btn-danger", @onclick = "Eliminar()" })
+
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
 
 <script>
 
     function Eliminar() {
 
-        if (confirm("¿Desea eliminar el registro realmente?")==1) {
+        if (confirm("¿Desea eliminar el registro realmente?") == 1) {
             //si pone Si
             alert("Se elimino correctamente");
 

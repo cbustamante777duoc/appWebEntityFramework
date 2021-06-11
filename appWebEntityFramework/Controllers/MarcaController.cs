@@ -10,19 +10,40 @@ namespace appWebEntityFramework.Controllers
     public class MarcaController : Controller
     {
         // GET: Marca
-        public ActionResult Index()
+        public ActionResult Index(MarcaCLS marcaCLS)
         {
+            string nombreMarca = marcaCLS.nombre;
+
             List<MarcaCLS> listaMarca = null;
+
             using (var bd = new BDPasajeEntities())
             {
-                listaMarca = (from marca in bd.Marca
-                              where marca.BHABILITADO == 1
-                              select new MarcaCLS
-                              {
-                                  iidmarca = marca.IIDMARCA,
-                                  nombre = marca.NOMBRE,
-                                  descripcion = marca.DESCRIPCION
-                              }).ToList();
+
+                if (marcaCLS.nombre == null)
+                {
+
+                    listaMarca = (from marca in bd.Marca
+                                  where marca.BHABILITADO == 1
+                                  select new MarcaCLS
+                                  {
+                                      iidmarca = marca.IIDMARCA,
+                                      nombre = marca.NOMBRE,
+                                      descripcion = marca.DESCRIPCION
+                                  }).ToList();
+                }
+                else
+                {
+
+                    listaMarca = (from marca in bd.Marca
+                                  where marca.BHABILITADO == 1
+                                  && marca.NOMBRE.Contains(nombreMarca)
+                                  select new MarcaCLS
+                                  {
+                                      iidmarca = marca.IIDMARCA,
+                                      nombre = marca.NOMBRE,
+                                      descripcion = marca.DESCRIPCION
+                                  }).ToList();
+                }
             }
 
             return View(listaMarca);
