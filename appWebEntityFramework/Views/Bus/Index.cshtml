@@ -37,7 +37,11 @@
                 <td>
                     @Html.ActionLink(" ", "Editar", "Bus", new { id = item.iidBus }, new { @class = "bi bi-pen btn btn-primary" })
 
-                    @Html.ActionLink(" ", "Eliminar", "Bus", new { id = item.iidBus }, new { @class = "bi bi-trash btn btn-danger" })
+                    @*@Html.ActionLink(" ", "Eliminar", "Bus", new { id = item.iidBus }, new { @class = "bi bi-trash btn btn-danger" })*@
+
+                    <!-- Button trigger modal BOTON ELIMINAR-->
+                    <button type="button" onclick="mostrarPopup(@item.iidBus)" class="bi bi-trash btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    </button>
 
                 </td>
             </tr>
@@ -48,3 +52,38 @@
     </tbody>
 
 </table>
+
+<!--MODAL-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar los cambios ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div style="padding:1em">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="Agregar()" class="btn btn-info">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--el id bus tiene que ser el mismo que se pasa por la funcion-->
+@using (Html.BeginForm("Eliminar","Bus", FormMethod.Post, new {@id = "frmEliminar" }))
+{
+    @Html.TextBox("iidBus")
+}
+
+<script>
+    function mostrarPopup(idBus) {
+        document.getElementById("iidBus").value = idBus;
+    }
+
+    function Agregar() {
+        var frmEliminar = document.getElementById("frmEliminar");
+        frmEliminar.submit();
+    }
+
+</script>

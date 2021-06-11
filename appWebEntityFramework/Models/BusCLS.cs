@@ -70,5 +70,8 @@ namespace appWebEntityFramework.Models
 
         [Display(Name = "Nombre modelo")]
         public string nombreModelo { get; set; }
+
+        //PROPIEDAD ADICIONAL MENSAJE ERROR 
+        public string mensajeError { get; set; }
     }
 }

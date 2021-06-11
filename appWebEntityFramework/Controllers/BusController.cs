@@ -141,8 +141,18 @@ namespace appWebEntityFramework.Controllers
         [HttpPost]
         public ActionResult Agregar(BusCLS oBusCLS) 
         {
-            if (!ModelState.IsValid)
+            int nRegistroEncontrado = 0;
+            string placa = oBusCLS.placa;
+
+            using (var bd = new BDPasajeEntities())
             {
+                nRegistroEncontrado = bd.Bus.Where(p => p.PLACA.Equals(placa)).Count();
+
+            }
+
+            if (!ModelState.IsValid || nRegistroEncontrado>=1)
+            {
+                if (nRegistroEncontrado >= 1) oBusCLS.mensajeError = "Ya existe el bus en el sistema";
                 ListarComboxes();
                 return View(oBusCLS);
             }
@@ -200,9 +210,20 @@ namespace appWebEntityFramework.Controllers
         public ActionResult Editar(BusCLS oBusCLS) 
         {
             int idBus = oBusCLS.iidBus;
+            int nRegistroEncontrado = 0;
+            string placa = oBusCLS.placa;
 
-            if (!ModelState.IsValid)
+            using (var bd = new BDPasajeEntities())
             {
+                nRegistroEncontrado = bd.Bus.Where(p => p.PLACA.Equals(placa) && !p.IIDBUS.Equals(idBus)).Count();
+
+            }
+
+
+            if (!ModelState.IsValid || nRegistroEncontrado>=1)
+            {
+                if (nRegistroEncontrado >= 1) oBusCLS.mensajeError = "Ya existe el bus en el sistema";
+                ListarComboxes();
                 return View(oBusCLS);
             }
 
@@ -228,7 +249,20 @@ namespace appWebEntityFramework.Controllers
             return RedirectToAction("Index");
         
         }
-     
+
+        [HttpPost]
+        public ActionResult Eliminar(int iidBus) 
+        {
+            using (var bd = new BDPasajeEntities())
+            {
+                Bus bus = bd.Bus.Where(p => p.IIDBUS.Equals(iidBus)).First();
+                bus.BHABILITADO = 0;
+                bd.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        
+        }     
 
     }
 }
