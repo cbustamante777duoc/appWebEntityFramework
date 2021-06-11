@@ -60,5 +60,8 @@ namespace appWebEntityFramework.Models
 
         [Display(Name = "nombre del tipo usuario ")]
         public string nombreTipoUsuario { get; set; }
+
+        //PROPIEDAD MENSAJE ERROR
+        public string mensajeError { get; set; }
     }
 }

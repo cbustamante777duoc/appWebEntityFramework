@@ -117,8 +117,22 @@ namespace appWebEntityFramework.Controllers
         [HttpPost]
         public ActionResult Agregar(EmpleadoCLS oEmpleadoCLS) 
         {
-            if (!ModelState.IsValid)
+            int nRegistroEncontrado = 0;
+            string nombre = oEmpleadoCLS.nombre;
+            string apPaterno = oEmpleadoCLS.apPaterno;
+            string apMaterno = oEmpleadoCLS.apMaterno;
+
+            using (var bd = new BDPasajeEntities())
             {
+                nRegistroEncontrado = bd.Empleado.Where(p => p.NOMBRE.Equals(nombre) &&
+                p.APPATERNO.Equals(apPaterno) && p.APMATERNO.Equals(apMaterno)).Count();
+
+            }
+
+            if (!ModelState.IsValid || nRegistroEncontrado>=1)
+            {
+                if (nRegistroEncontrado >= 1) oEmpleadoCLS.mensajeError = "El Empleado ya existe en la sistema";
+
                 //importar los combox
                 listarCombos();
                 return View(oEmpleadoCLS);
@@ -175,9 +189,22 @@ namespace appWebEntityFramework.Controllers
         {
             int idEmpleado = oEmpleadoCLS.iidEmpleado;
 
-            if (!ModelState.IsValid)
-            {
+            int nRegistrosEncontrado = 0;
+            string nombre = oEmpleadoCLS.nombre;
+            string apPaterno = oEmpleadoCLS.apPaterno;
+            string apMaterno = oEmpleadoCLS.apMaterno;
 
+            using (var bd = new BDPasajeEntities())
+            {
+                nRegistrosEncontrado = bd.Empleado.Where(p => p.NOMBRE.Equals(nombre) &&
+                p.APPATERNO.Equals(apPaterno) && p.APMATERNO.Equals(apMaterno) && !p.IIDEMPLEADO.Equals(idEmpleado)).Count();
+
+            }
+            
+            if (!ModelState.IsValid || nRegistrosEncontrado>=1)
+            {
+                if (nRegistrosEncontrado >= 1) oEmpleadoCLS.mensajeError = "Ya existe el empleado en sistema";
+                listarCombos();
                 return View(oEmpleadoCLS);
             }
 
