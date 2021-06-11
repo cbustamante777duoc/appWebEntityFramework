@@ -34,7 +34,11 @@
 
                     @Html.ActionLink(" ", "Editar", "Empleado", new { id = item.iidEmpleado }, new { @class = "bi bi-pen btn btn-primary" })
 
-                    @Html.ActionLink(" ", "Eliminar", "Empleado", new { id = item.iidEmpleado }, new { @class = "bi bi-trash btn btn-danger" })
+                    @*@Html.ActionLink(" ", "Eliminar", "Empleado", new { id = item.iidEmpleado }, new { @class = "bi bi-trash btn btn-danger" })*@
+
+                    <!-- Button trigger modal ELIMINAR -->
+                    <button type="button" onclick="mostrarPopup(@item.iidEmpleado)" class="bi bi-trash btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    </button>
                 </td>
             </tr>
         }
@@ -43,3 +47,44 @@
     </tbody>
 
 </table>
+
+
+<!--MODAL-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar los cambios ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div style="padding:1em">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="Agregar()" class="btn btn-info">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("Eliminar","Empleado",FormMethod.Post, new {@id="frmEliminar" }))
+{
+    @Html.Hidden("txtidEmpleado")
+}
+
+<script>
+    //funcion que permite eliminar
+    function mostrarPopup(idEmpleado) {
+        document.getElementById("txtidEmpleado").value = idEmpleado;
+
+    }
+
+    //funcion que activa el formulario eliminar
+    function Agregar() {
+        var frmEliminar = document.getElementById("frmEliminar");
+        frmEliminar.submit();
+    }
+
+
+
+</script>

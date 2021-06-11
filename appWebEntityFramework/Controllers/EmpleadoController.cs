@@ -202,5 +202,19 @@ namespace appWebEntityFramework.Controllers
         
         }
 
+        [HttpPost]
+        public ActionResult Eliminar(int txtidEmpleado) 
+        {
+            using (var bd = new BDPasajeEntities())
+            {
+                Empleado empleado = bd.Empleado.Where(p => p.IIDEMPLEADO.Equals(txtidEmpleado)).First();
+                empleado.BHABILITADO = 0;
+                bd.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        
+        }
+
     }
 }

@@ -157,6 +157,7 @@ namespace appWebEntityFramework.Controllers
             if (!ModelState.IsValid || nRegistrosEncontrado>=1)
             {
                 if (nRegistrosEncontrado >= 1) oClienteCLS.mensajeError = "Ya existe el cliente";
+                //llamar el comboSexo evita que se caiga el programa
                 llenarComboSexo();
                 return View(oClienteCLS);
 
