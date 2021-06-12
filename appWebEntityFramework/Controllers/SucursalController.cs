@@ -10,23 +10,46 @@ namespace appWebEntityFramework.Controllers
     public class SucursalController : Controller
     {
         // GET: Sucursal
-        public ActionResult Index()
+        public ActionResult Index(SucursalCLS sucursalCLS)
         {
             List<SucursalCLS> listaSucursal = null;
-            using (var bd = new BDPasajeEntities())
-            {
-                listaSucursal = (from sucursal in bd.Sucursal
-                                 where sucursal.BHABILITADO==1
-                                 select new SucursalCLS
-                                 {
-                                     iidsucursal = sucursal.IIDSUCURSAL,
-                                     nombre = sucursal.NOMBRE,
-                                     telefono = sucursal.TELEFONO,
-                                     email = sucursal.EMAIL
 
-                                 }).ToList();
+            string nombreSucursal = sucursalCLS.nombre;
 
-            }
+                using (var bd = new BDPasajeEntities())
+                {
+                    if (sucursalCLS.nombre == null)
+                    {
+                        listaSucursal = (from sucursal in bd.Sucursal
+                                         where sucursal.BHABILITADO == 1
+                                         select new SucursalCLS
+                                         {
+                                             iidsucursal = sucursal.IIDSUCURSAL,
+                                             nombre = sucursal.NOMBRE,
+                                             telefono = sucursal.TELEFONO,
+                                             email = sucursal.EMAIL
+
+                                         }).ToList();
+                    }
+                    else
+                    {
+                        listaSucursal = (from sucursal in bd.Sucursal
+                                         where sucursal.BHABILITADO == 1 &&
+                                         sucursal.NOMBRE.Contains(nombreSucursal)
+                                         select new SucursalCLS
+                                         {
+                                             iidsucursal = sucursal.IIDSUCURSAL,
+                                             nombre = sucursal.NOMBRE,
+                                             telefono = sucursal.TELEFONO,
+                                             email = sucursal.EMAIL
+
+                                         }).ToList();
+
+                    }
+                }
+
+           
+            
             return View(listaSucursal);
         }
 

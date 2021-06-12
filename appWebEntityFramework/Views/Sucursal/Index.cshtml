@@ -8,6 +8,11 @@
 
 @Html.ActionLink("Agregar","Agregar","Sucursal",null, new {@class = "btn btn-primary" })
 
+@using (Html.BeginForm("Index", "Sucursal", FormMethod.Get, new {@id="frmBuscar" }))
+{
+@Html.Label("ingrese el nombre de la sucursal")
+@Html.TextBox("nombre")
+
 <table class="table table-bordered table-hover">
 
     <thead>
@@ -32,9 +37,9 @@
 
                 <td>
 
-                    @Html.ActionLink(" ", "Editar", "Sucursal", new { id = item.iidsucursal}, new { @class = "bi bi-pen btn btn-primary" })
+                    @Html.ActionLink(" ", "Editar", "Sucursal", new { id = item.iidsucursal }, new { @class = "bi bi-pen btn btn-primary" })
 
-                    @Html.ActionLink(" ", "Eliminar", "Sucursal", new { id = item.iidsucursal }, new { @class = "bi bi-trash btn btn-danger" ,@onclick="eliminarSucursal()" })
+                    @Html.ActionLink(" ", "Eliminar", "Sucursal", new { id = item.iidsucursal }, new { @class = "bi bi-trash btn btn-danger", @onclick = "eliminarSucursal()" })
 
                 </td>
             </tr>
@@ -42,6 +47,9 @@
     </tbody>
 
 </table>
+}
+
+
 
 <script>
 
@@ -55,5 +63,14 @@
 
 
     }
+
+    //capturando el id del textobox anque no tenga id igual se captura
+    var nombre = document.getElementById("nombre");
+    //creando una funcion la cual activa la busqueda 
+    nombre.onkeyup = function () {
+        var frmBuscar = document.getElementById("frmBuscar")
+        frmBuscar.submit();
+    }
+
 
 </script>
