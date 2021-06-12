@@ -10,23 +10,48 @@ namespace appWebEntityFramework.Controllers
     public class ClienteController : Controller
     {
         // GET: Cliente
-        public ActionResult Index()
+        public ActionResult Index(ClienteCLS clienteCLS)
         {
             List<ClienteCLS> listaCliente = null;
 
+            int iidSexo = clienteCLS.iidsexo;
+
+            llenarComboSexo();
+            //ViewBag.listaSexo = lista;
+
             using (var bd = new BDPasajeEntities())
             {
-                listaCliente = (from cliente in bd.Cliente
-                                where cliente.BHABILITADO == 1
-                                select new ClienteCLS
-                                {
-                                    iidcliente = cliente.IIDCLIENTE,
-                                    nombre = cliente.NOMBRE,
-                                    apPaterno = cliente.APPATERNO,
-                                    apMaterno = cliente.APMATERNO,
-                                    telefonoFijo = cliente.TELEFONOFIJO
+                if (clienteCLS.iidsexo==0)
+                {
+                    listaCliente = (from cliente in bd.Cliente
+                                    where cliente.BHABILITADO == 1
+                                    select new ClienteCLS
+                                    {
+                                        iidcliente = cliente.IIDCLIENTE,
+                                        nombre = cliente.NOMBRE,
+                                        apPaterno = cliente.APPATERNO,
+                                        apMaterno = cliente.APMATERNO,
+                                        telefonoFijo = cliente.TELEFONOFIJO
 
-                                }).ToList();
+                                    }).ToList();
+
+                }
+                else
+                {
+                    listaCliente = (from cliente in bd.Cliente
+                                    where cliente.BHABILITADO == 1
+                                    && cliente.IIDSEXO == iidSexo
+                                    select new ClienteCLS
+                                    {
+                                        iidcliente = cliente.IIDCLIENTE,
+                                        nombre = cliente.NOMBRE,
+                                        apPaterno = cliente.APPATERNO,
+                                        apMaterno = cliente.APMATERNO,
+                                        telefonoFijo = cliente.TELEFONOFIJO
+
+                                    }).ToList();
+
+                }
             }
 
             return View(listaCliente);

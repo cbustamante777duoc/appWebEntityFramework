@@ -3,10 +3,18 @@
 
 @{
     ViewBag.Title = "Index";
+    List<SelectListItem> listaSexo = (List<SelectListItem>)ViewBag.listaSexo;
 }
 
 <h2>Clientes</h2>
 @Html.ActionLink("agregar","Agregar","Cliente",null, new {@class ="btn btn-primary" })
+
+@using (Html.BeginForm("Index","Cliente",FormMethod.Get))
+{
+    @Html.Label("ingrese sexo del cliente")
+    @Html.DropDownList("iidsexo", listaSexo)
+    <input type="submit" value="Buscar" class="btn btn-warning"/>
+
 <table class="table table-bordered table-hover">
 
     <thead>
@@ -46,6 +54,8 @@
     </tbody>
 
 </table>
+}
+
 
 <!--BOTON QUE TOMA EL ID DEL CLIENTE Y VA AL METODO ELIMINAR DEL CLIENTECONTROLER-->
 @using (Html.BeginForm("Eliminar","Cliente",FormMethod.Post, new { @id = "frmEliminar"}))
