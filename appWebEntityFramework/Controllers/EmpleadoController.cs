@@ -11,28 +11,56 @@ namespace appWebEntityFramework.Controllers
     {
 
 
-        List<EmpleadoCLS> listaEmpleado = null;
-        public ActionResult Index()
+        
+        public ActionResult Index(EmpleadoCLS oempleadoCLS)
         {
+            List<EmpleadoCLS> listaEmpleado = null;
+            llenarComboTipoUsuario();
+            int iidTipoUsuario = oempleadoCLS.iidtipoUsuario;
+
             using (var bd = new BDPasajeEntities())
             {
-                listaEmpleado = (from empleado in bd.Empleado
-                                 join tipoUsuario in bd.TipoUsuario
-                                 on empleado.IIDTIPOUSUARIO equals tipoUsuario.IIDTIPOUSUARIO
-                                 join tipoContrato in bd.TipoContrato
-                                 on empleado.IIDTIPOCONTRATO equals tipoContrato.IIDTIPOCONTRATO
-                                 where empleado.BHABILITADO ==1
-                                 select new EmpleadoCLS
-                                 {
-                                     iidEmpleado = empleado.IIDEMPLEADO,
-                                     nombre = empleado.NOMBRE,
-                                     apPaterno = empleado.APPATERNO,
-                                     nombreTipoContrato = tipoContrato.NOMBRE,
-                                     nombreTipoUsuario = tipoUsuario.NOMBRE
+                if (iidTipoUsuario == 0)
+                {
+                    listaEmpleado = (from empleado in bd.Empleado
+                                     join tipoUsuario in bd.TipoUsuario
+                                     on empleado.IIDTIPOUSUARIO equals tipoUsuario.IIDTIPOUSUARIO
+                                     join tipoContrato in bd.TipoContrato
+                                     on empleado.IIDTIPOCONTRATO equals tipoContrato.IIDTIPOCONTRATO
+                                     where empleado.BHABILITADO == 1
+                                     select new EmpleadoCLS
+                                     {
+                                         iidEmpleado = empleado.IIDEMPLEADO,
+                                         nombre = empleado.NOMBRE,
+                                         apPaterno = empleado.APPATERNO,
+                                         nombreTipoContrato = tipoContrato.NOMBRE,
+                                         nombreTipoUsuario = tipoUsuario.NOMBRE
 
-                                 }).ToList();
+                                     }).ToList();
+                }
+                else
+                {
+                    listaEmpleado = (from empleado in bd.Empleado
+                                     join tipoUsuario in bd.TipoUsuario
+                                     on empleado.IIDTIPOUSUARIO equals tipoUsuario.IIDTIPOUSUARIO
+                                     join tipoContrato in bd.TipoContrato
+                                     on empleado.IIDTIPOCONTRATO equals tipoContrato.IIDTIPOCONTRATO
+                                     where empleado.BHABILITADO == 1
+                                     && empleado.IIDTIPOUSUARIO == iidTipoUsuario
+                                     select new EmpleadoCLS
+                                     {
+                                         iidEmpleado = empleado.IIDEMPLEADO,
+                                         nombre = empleado.NOMBRE,
+                                         apPaterno = empleado.APPATERNO,
+                                         nombreTipoContrato = tipoContrato.NOMBRE,
+                                         nombreTipoUsuario = tipoUsuario.NOMBRE
 
+                                     }).ToList();
+
+                }
             }
+
+
             return View(listaEmpleado);
         }
 
