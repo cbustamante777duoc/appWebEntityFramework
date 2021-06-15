@@ -1,0 +1,60 @@
+﻿@model List<appWebEntityFramework.Models.TipoUsuarioCLS>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "TipoUsuario", FormMethod.Post, new {@id="frmBuscar" }))
+{
+<table class="table table-bordered table-hover" >
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => Model[0].iidTipousuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => Model[0].nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => Model[0].descripcion)
+        </th>
+        
+        <th>Operaciones</th>
+        
+    </tr>
+
+    <tr>
+        <td>@Html.TextBox("iidTipousuario", null, new { @class = "form-control" })</td>
+        <td>@Html.TextBox("nombre", null, new { @class = "form-control" })</td>
+        <td>@Html.TextBox("descripcion", null, new { @class = "form-control" })</td>
+        
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.iidTipousuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
+}
