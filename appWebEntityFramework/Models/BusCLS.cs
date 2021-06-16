@@ -15,7 +15,7 @@ namespace appWebEntityFramework.Models
         [Required]
         public int iidSucursal { get; set; }
 
-        [Display(Name = "Tipo bus")]
+        [Display(Name = " nombre Tipo bus")]
         [Required]
         public int iidTipoBus { get; set; }
 
