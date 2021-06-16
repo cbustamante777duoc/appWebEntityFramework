@@ -18,9 +18,9 @@
 
 @Html.ActionLink("Agregar", "Agregar", "Bus", new { @class = "btn btn-primary" })
 
-@using (Html.BeginForm("Index", "Bus", FormMethod.Post)) {
+@using (Html.BeginForm("Index", "Bus", FormMethod.Post, new {@id="frmBuscar" })) {
 
-< table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover">
 
     <thead>
         <tr>
@@ -99,6 +99,16 @@
 }
 
 <script>
+    var frmBuscar = document.getElementById("frmBuscar");
+    var controles = document.getElementsByClassName("form-control");
+    var ncontroles = controles.length;
+
+    for (var i = 0; i < ncontroles; i++) {
+        controles[i].onchange = function () {
+            frmBuscar.submit();
+        }
+    }
+
     function mostrarPopup(idBus) {
         document.getElementById("iidBus").value = idBus;
     }

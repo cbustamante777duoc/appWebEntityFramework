@@ -14,35 +14,73 @@ namespace appWebEntityFramework.Controllers
         public ActionResult Index(BusCLS busCLS)
         {
             ListarComboxes();
+             List<BusCLS> listaRespuesta = new List<BusCLS>();
              List<BusCLS> listaBus = null;
             using (var bd = new BDPasajeEntities())
             {
+                listaBus = (from bus in bd.Bus
+                            join sucursal in bd.Sucursal
+                            on bus.IIDSUCURSAL equals sucursal.IIDSUCURSAL
+                            join tipoBus in bd.TipoBus
+                            on bus.IIDTIPOBUS equals tipoBus.IIDTIPOBUS
+                            join tipoModelo in bd.Modelo
+                            on bus.IIDMODELO equals tipoModelo.IIDMODELO
+                            where bus.BHABILITADO == 1
+                            select new BusCLS
+                            {
+                                iidBus = bus.IIDBUS,
+                                placa = bus.PLACA,
+                                nombreModelo = tipoModelo.NOMBRE,
+                                nombreSucursal = sucursal.NOMBRE,
+                                nombreTipoBus = tipoBus.NOMBRE,
+                                iidModelo = tipoModelo.IIDMODELO,
+                                iidSucursal = sucursal.IIDSUCURSAL,
+                                iidTipoBus = tipoBus.IIDTIPOBUS
+
+                            }).ToList();
+
+
                 //VALIDACION
                 if (busCLS.iidBus == 0 && busCLS.placa == null
                     && busCLS.iidModelo == 0 && busCLS.iidSucursal == 0
                     && busCLS.iidTipoBus == 0)
                 {
-                    listaBus = (from bus in bd.Bus
-                                join sucursal in bd.Sucursal
-                                on bus.IIDSUCURSAL equals sucursal.IIDSUCURSAL
-                                join tipoBus in bd.TipoBus
-                                on bus.IIDTIPOBUS equals tipoBus.IIDTIPOBUS
-                                join tipoModelo in bd.Modelo
-                                on bus.IIDMODELO equals tipoModelo.IIDMODELO
-                                where bus.BHABILITADO == 1
-                                select new BusCLS
-                                {
-                                    iidBus = bus.IIDBUS,
-                                    placa = bus.PLACA,
-                                    nombreModelo = tipoModelo.NOMBRE,
-                                    nombreSucursal = sucursal.NOMBRE,
-                                    nombreTipoBus = tipoBus.NOMBRE,
+                    listaRespuesta = listaBus;
+                }
+                else
+                {
+                    //filtro por bus
+                    if (busCLS.iidBus !=0)
+                    {
+                       listaBus = listaBus.Where(p => p.iidBus.ToString().Contains(busCLS.iidBus.ToString())).ToList();
+                    }
+                    //filtro por Placa
+                    if (busCLS.placa != null)
+                    {
+                        listaBus = listaBus.Where(p => p.placa.Contains(busCLS.placa)).ToList();
+                    }
+                    //filtro por modelo
+                    if (busCLS.iidModelo != 0)
+                    {
+                        listaBus = listaBus.Where(p => p.iidModelo.ToString().Contains(busCLS.iidModelo.ToString())).ToList();
+                    }
+                    //filtro por sucursal
+                    if (busCLS.iidSucursal != 0)
+                    {
+                        listaBus = listaBus.Where(p => p.iidSucursal.ToString().Contains(busCLS.iidSucursal.ToString())).ToList();
+                    }
 
-                                }).ToList();
-                }                                                                                                                                                                                                                                                                                                                                                    
+                    //filtro por tipo bus
+                    if (busCLS.iidTipoBus != 0)
+                    {
+                        listaBus = listaBus.Where(p => p.iidTipoBus.ToString().Contains(busCLS.iidTipoBus.ToString())).ToList();
+                    }
+
+                    listaRespuesta = listaBus;
+                }
             }
 
-            return View(listaBus);
+            return View(listaRespuesta);
         }
 
         public void llenarComboTipoBus()
