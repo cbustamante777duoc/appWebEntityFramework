@@ -58,3 +58,23 @@
 
 </table>
 }
+
+<script>
+    var iidTipousuario = document.getElementById("iidTipousuario");
+    var nombre = document.getElementById("nombre");
+    var descripcion = document.getElementById("descripcion");
+    var frmBuscar = document.getElementById("frmBuscar");
+
+    iidTipousuario.onkeyup = function () {
+        frmBuscar.submit();
+    }
+
+    nombre.onkeyup = function () {
+        frmBuscar.submit();
+    }
+
+    descripcion.onkeyup = function () {
+        frmBuscar.submit();
+    }
+
+</script>
