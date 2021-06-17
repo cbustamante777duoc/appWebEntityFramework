@@ -1,0 +1,42 @@
+﻿@using appWebEntityFramework.Models
+@model List<RolCLS>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Ajax.BeginForm("Filtro", "", new AjaxOptions
+{
+    HttpMethod = "POST",
+    UpdateTargetId = "divRol",
+    InsertionMode = InsertionMode.Replace
+}, new { @id = "frmFiltro" }))
+{
+    @Html.Label("Ingrese nombre Rol")
+    @Html.TextBox("nombre", null, new { @class = "form-control" })
+    <div id="divRol">
+
+        @Html.Partial("_TablaRol", Model)
+
+    </div>
+
+}
+
+
+
+
+
+<script>
+
+    var nombre = document.getElementById("nombre");
+    nombre.onkeyup = function () {
+        $("#frmFiltro").trigger("submit");
+    }
+
+</script>
+
+<!--Recuerda importar estos dos scripts para que funcione el filtro-->
+<!--tambien recuerda instalar jquery.unobtrusive-ajax desde nutget -->
+<script src="~/Scripts/jquery-1.8.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
